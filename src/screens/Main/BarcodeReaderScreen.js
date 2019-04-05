@@ -1,11 +1,54 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { RNCamera } from 'react-native-camera';
 
 export default class BarcodeReaderScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            camera: {
+                type: RNCamera.Constants.Type.back,
+                barcodeFinderVisible: true,
+                // Storing scanned barcodes in an array for now
+                // Will need to make the data go to a database at some point
+                barcode = '',
+            }
+        };
+    }
+
+    onBarCodeRead = (scan) => {
+        // Need to find what type # refers to UPC
+        // let upcType;
+        // if (scan.type === upcType) {
+            if (scan.data != null) {
+                this.setState({
+                    barcode: scan.data
+                });
+                this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode});
+            }
+        // }
+        return;
+    }
+    
     render () {
         return(
             <View style={styles.container}>
-                <Text>BarcodeReaderScreen</Text>
+                <RNCamera
+                    aspect={RNCamera.Constants.aspect.fill}
+                    barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
+                    barcodeFinderWidth={280}
+                    barcodeFinderHeight={220}
+                    barcodeFinderBorderColor="white"
+                    barcodeFinderBorderWidth={2}
+                    defaultTouchToFocus
+                    onBarCodeRead={this.onBarCodeRead.bind(this)}
+                    permissionDialogTitle={'Camera Permission'}
+                    permissionDialogMessage={'We need your permission to use the camera.'}
+                    ref={cam => this.camera = cam}
+                    style={styles.preview}
+                    type={this.state.camera.type}
+                />
             </View>
         );
     }
@@ -14,7 +57,11 @@ export default class BarcodeReaderScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: row,
+    },
+    preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     }
 });

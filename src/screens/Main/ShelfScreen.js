@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default class ShelfScreen extends React.Component {
+    state = {
+        scannedBarcodeList: [],
+    };
+
     render () {
         return(
             <View style={styles.container}>
