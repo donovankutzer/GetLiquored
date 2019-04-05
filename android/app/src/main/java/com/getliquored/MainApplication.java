@@ -30,8 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
           new RNCameraPackage(),
           new VectorIconsPackage(),
           new RNGestureHandlerPackage(),
-          new SQLitePluginPackage(), 
-          new MainReactPackage()
+          new SQLitePluginPackage()
       );
     }
 

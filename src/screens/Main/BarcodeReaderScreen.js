@@ -12,7 +12,7 @@ export default class BarcodeReaderScreen extends React.Component {
                 barcodeFinderVisible: true,
                 // Storing scanned barcodes in an array for now
                 // Will need to make the data go to a database at some point
-                barcode = '',
+                barcode: '',
             }
         };
     }
@@ -22,6 +22,7 @@ export default class BarcodeReaderScreen extends React.Component {
         // let upcType;
         // if (scan.type === upcType) {
             if (scan.data != null) {
+                alert(scan.type);
                 this.setState({
                     barcode: scan.data
                 });
@@ -35,12 +36,12 @@ export default class BarcodeReaderScreen extends React.Component {
         return(
             <View style={styles.container}>
                 <RNCamera
-                    aspect={RNCamera.Constants.aspect.fill}
                     barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
                     barcodeFinderWidth={280}
                     barcodeFinderHeight={220}
                     barcodeFinderBorderColor="white"
                     barcodeFinderBorderWidth={2}
+                    captureAudio={false}
                     defaultTouchToFocus
                     onBarCodeRead={this.onBarCodeRead.bind(this)}
                     permissionDialogTitle={'Camera Permission'}
@@ -57,7 +58,7 @@ export default class BarcodeReaderScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: row,
+        flexDirection: 'row',
     },
     preview: {
         flex: 1,
