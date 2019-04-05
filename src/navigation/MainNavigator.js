@@ -33,6 +33,7 @@ import RecipeBookScreen from '../screens/Main/RecipeBookScreen';
         activeTintColor: 'black',
         inactiveTintColor: 'gray',
       },
+      showLabel: false
     }
   );
 

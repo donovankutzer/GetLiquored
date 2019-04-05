@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class RecipeBookScreen extends React.Component {
+class RecipeBookScreen extends React.Component {
+
+    renderScreen = () => {
+        const isFocused = this.props.navigation.isFocused();
+
+        if (!isFocused) {
+            return null;
+        } else if (isFocused) {
+            return (
+                <Text>RecipeBookScreen</Text>
+            );
+        }
+    }
+
     render () {
         return(
             <View style={styles.container}>
-                <Text>RecipeBookScreen</Text>
+                {this.renderScreen()}
             </View>
         );
     }
@@ -18,3 +32,5 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+export default withNavigationFocus(RecipeBookScreen);

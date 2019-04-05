@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class ShelfScreen extends React.Component {
+class ShelfScreen extends React.Component {
     state = {
         scannedBarcodeList: [],
     };
 
+    renderScreen = () => {
+        const isFocused = this.props.navigation.isFocused();
+
+        if (!isFocused) {
+            return null;
+        } else if (isFocused) {
+            return (
+                <Text>ShelfScreen</Text>
+            );
+        }
+    }
+
     render () {
         return(
             <View style={styles.container}>
-                <Text>ShelfScreen</Text>
+                {this.renderScreen()}
             </View>
         );
     }
@@ -22,3 +35,5 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+export default withNavigationFocus(ShelfScreen);
