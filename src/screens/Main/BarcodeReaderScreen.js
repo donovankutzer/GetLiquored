@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class BarcodeReaderScreen extends React.Component {
+class BarcodeReaderScreen extends React.Component {
     constructor(props) {
         super(props);
         
@@ -18,23 +19,23 @@ export default class BarcodeReaderScreen extends React.Component {
     }
 
     onBarCodeRead = (scan) => {
-        // Need to find what type # refers to UPC
-        // let upcType;
-        // if (scan.type === upcType) {
-            if (scan.data != null) {
-                alert(scan.type);
-                this.setState({
-                    barcode: scan.data
-                });
-                this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode});
-            }
-        // }
+        if (scan.data != null) {
+            alert(scan.type);
+            this.setState({
+                barcode: scan.data
+            });
+            this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode});
+        }
         return;
     }
     
-    render () {
-        return(
-            <View style={styles.container}>
+    renderScreen = () => {
+        const isFocused = this.props.navigation.isFocused();
+
+        if (!isFocused) {
+            return null;
+        } else if (isFocused) {
+            return (
                 <RNCamera
                     barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
                     barcodeFinderWidth={280}
@@ -46,10 +47,18 @@ export default class BarcodeReaderScreen extends React.Component {
                     onBarCodeRead={this.onBarCodeRead.bind(this)}
                     permissionDialogTitle={'Camera Permission'}
                     permissionDialogMessage={'We need your permission to use the camera.'}
-                    ref={cam => this.camera = cam}
+                    ref={ref => this.camera = ref}
                     style={styles.preview}
                     type={this.state.camera.type}
                 />
+            );
+        }
+    }
+
+    render () {
+        return(
+            <View style={styles.container}>
+                {this.renderScreen()}
             </View>
         );
     }
@@ -66,3 +75,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
+
+export default withNavigationFocus(BarcodeReaderScreen);
