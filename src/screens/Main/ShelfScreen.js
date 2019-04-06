@@ -10,11 +10,14 @@ class ShelfScreen extends React.Component {
     renderScreen = () => {
         const isFocused = this.props.navigation.isFocused();
 
+        const { navigation } = this.props;
+        const upc = navigation.getParam('scannedUPC', 'Currently Empty');
+
         if (!isFocused) {
             return null;
         } else if (isFocused) {
             return (
-                <Text>ShelfScreen</Text>
+                <Text>{upc}</Text>
             );
         }
     }
