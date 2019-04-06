@@ -22,9 +22,10 @@ class BarcodeReaderScreen extends React.Component {
         if (scan.data != null) {
             alert(scan.type);
             this.setState({
-                barcode: scan.data
-            });
-            this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode});
+                barcode: scan.data,
+            }, 
+                function(){ this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode}) }
+            );            
         }
         return;
     }
