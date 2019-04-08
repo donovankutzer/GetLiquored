@@ -2,47 +2,31 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 
-import ListItem from '../components/ListItem';
+import DrinkList from '../components/DrinkList';
 
-const upc = '';
+/*const upc = '';
 const newScan = false;
 const scannedBarcodeList = [];
-const listKey = 0;
+const listKey = 0;*/
+
+const { navigation } = this.props;
+var upc = '';
 
 class ShelfScreen extends React.Component {
     state = {
-       /* upc: '',
-        newScan: false,
         scannedBarcodeList: [],
-        listKey: 0,*/
-    }
+    };
 
-    newScanHandler = () => {
-        if (upc !== '') {
-                newScan = true;
-        }
-    }
+    newScanCheck = () => {
+        upc = navigation.getParam('scannedUPC', '');
 
-    updateUPCValue = () => {
-        const { navigation } = this.props;
-        if (newScan){
-                upc = navigation.getParam('scannedUPC', '');
-        }
-        this.newScanHandler(); 
-    }
-
-    addToShelf = () => {
-        scannedBarcodeList.push(upc);
-            newScan = false;
-            listKey = listKey + 1;
-            upc = '';
-    }
-
-    validScanHandler = () => {
-        //let newScan = this.newScan;
-        if (newScan && !scannedBarcodeList.includes(upc) && upc !== '') {
-            this.addToShelf();
-        }
+        if (upc !== '' && !this.state.scannedBarcodeList.includes(upc)) {
+            this.setState(prevState => {
+                return {
+                    scannedBarcodeList: prevState.scannedBarcodeList.concat(upc)
+                };
+            });
+        };  
     }
 
     renderScreen = () => {
@@ -51,10 +35,11 @@ class ShelfScreen extends React.Component {
         if (!isFocused) {
             return null;
         } else if (isFocused) {
-            this.updateUPCValue();
-            this.validScanHandler();
+            this.newScanCheck();
             return (
-                <ListItem key={listKey}/>
+                <DrinkList 
+                    upcScanned={this.scannedBarcodeList}
+                />
             )
         }
     }
@@ -71,8 +56,9 @@ class ShelfScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#fff'
     }
 });
 
