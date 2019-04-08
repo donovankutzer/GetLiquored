@@ -7,12 +7,6 @@ class BarcodeReaderScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        // TO FIX LATER. TOO TIRED
-        db.transaction(function(tx) {
-            tx.exeuteSql('SELECT  FROM')
-
-        })
-
         this.state = {
             camera: {
                 type: RNCamera.Constants.Type.back,
@@ -26,7 +20,7 @@ class BarcodeReaderScreen extends React.Component {
 
     onBarCodeRead = (scan) => {
         if (scan.data != null) {
-            alert(scan.type);
+            alert(scan.data);
             this.setState({
                 barcode: scan.data
             },

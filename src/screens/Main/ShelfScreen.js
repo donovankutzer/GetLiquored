@@ -1,48 +1,57 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
-import {SQLITE} from 'react-native-sqlite-storage';
-var db = SQLITE.openDatabase({name: 'LiquorDB'});
+import {ScrollView} from 'react-native-gesture-handler';
 
 import ListItem from '../components/ListItem';
 
-const upc = '';
-const newScan = false;
-const scannedBarcodeList = [];
-const listKey = 0;
+var scannedUpc = '';
+var prevUpc = scannedUpc;
+var newScan = false;
+var scannedBarcodeList = [];
+var listKey = 0;
 
 class ShelfScreen extends React.Component {
-    state = {
-       /* upc: '',
-        newScan: false,
-        scannedBarcodeList: [],
-        listKey: 0,*/
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            upc: '',
+        };
     }
 
     newScanHandler = () => {
-        if (upc !== '') {
+        if (scannedUpc !== '') {
                 newScan = true;
         }
     }
 
     updateUPCValue = () => {
         const { navigation } = this.props;
-        if (newScan){
-                upc = navigation.getParam('scannedUPC', '');
+        if (!newScan){
+                scannedUpc = navigation.getParam('scannedUPC', '');
         }
         this.newScanHandler(); 
     }
 
     addToShelf = () => {
-        scannedBarcodeList.push(upc);
-            newScan = false;
-            listKey = listKey + 1;
-            upc = '';
+        scannedBarcodeList.push(scannedUpc);
+        newScan = false;
+        listKey = listKey + 1;
+
+        // WIP
+        if (scannedUpc !== prevUpc && scannedUpc !== ''){
+            prevUpc = scannedUpc;
+            this.setState ({
+                upc: scannedUpc,
+            });
+        }
+        prevUpc = scannedUpc;
+        scannedUpc = '';
     }
 
     validScanHandler = () => {
-        //let newScan = this.newScan;
-        if (newScan && !scannedBarcodeList.includes(upc) && upc !== '') {
+        if (newScan && !scannedBarcodeList.includes(scannedUpc) && scannedUpc !== '') {
             this.addToShelf();
         }
     }
@@ -56,8 +65,12 @@ class ShelfScreen extends React.Component {
             this.updateUPCValue();
             this.validScanHandler();
             return (
-                <ListItem key={listKey}/>
-            )
+                <ScrollView style={styles.scrollview} key={listKey}> 
+                    <Text> 
+                        {scannedBarcodeList} 
+                    </Text> 
+                </ScrollView>
+            );
         }
     }
 
@@ -67,7 +80,7 @@ class ShelfScreen extends React.Component {
                 {this.renderScreen()}
             </View>
         );
-    };
+    }
 } 
 
 const styles = StyleSheet.create({
@@ -75,6 +88,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    scrollview: {
+        width: 340,
+        backgroundColor: '#ffffff',
     }
 });
 
