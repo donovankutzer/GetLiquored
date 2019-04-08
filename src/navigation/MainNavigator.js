@@ -19,11 +19,11 @@ import RecipeBookScreen from '../screens/Main/RecipeBookScreen';
           const { routeName } = navigation.state;
           let iconName;
           if (routeName === 'RecipeBook') {
-            iconName = `book-outline`;
+            iconName = 'book-outline';
           } else if (routeName === 'BarcodeReader') {
-            iconName = `barcode`;
+            iconName = 'barcode';
           } else if (routeName === 'Shelf') {
-            iconName = `bottle-wine`;
+            iconName = 'bottle-wine';
           }
   
           return <MaterialCommunityIcons name={iconName} size={30} color={tintColor} />;
