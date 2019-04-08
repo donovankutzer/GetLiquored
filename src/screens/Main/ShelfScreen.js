@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
+import {SQLITE} from 'react-native-sqlite-storage';
+var db = SQLITE.openDatabase({name: 'LiquorDB'});
 
 class ShelfScreen extends React.Component {
     state = {
