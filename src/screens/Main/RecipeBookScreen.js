@@ -7,7 +7,7 @@ class RecipeBookScreen extends React.Component {
     renderScreen = () => {
         const isFocused = this.props.navigation.isFocused();
 
-        if (!isFocused) {
+        if (isFocused) {
             return null;
         } else if (isFocused) {
             return (
