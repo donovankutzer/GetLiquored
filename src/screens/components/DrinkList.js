@@ -4,10 +4,10 @@ import  { StyleSheet, ScrollView } from 'react-native';
 import DrinkItem from './DrinkItem';
 
 const drinkList = props => {
-    const drinksOutput = props.upcScanned.map((upc, i) => {
+    const drinksOutput = props.upcScanned.map((upcNumber, i) => {
         <DrinkItem
             key={i}
-            upcAdded={upc}
+            upc={upcNumber}
         />
     });
     return <ScrollView style={StyleSheet.listContainer}>{drinksOutput}</ScrollView>;
