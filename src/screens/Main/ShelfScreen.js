@@ -4,11 +4,6 @@ import { withNavigationFocus } from 'react-navigation';
 
 import DrinkList from '../components/DrinkList';
 
-/*const upc = '';
-const newScan = false;
-const scannedBarcodeList = [];
-const listKey = 0;*/
-
 const { navigation } = this.props;
 var upc = '';
 
@@ -23,7 +18,7 @@ class ShelfScreen extends React.Component {
         if (upc !== '' && !this.state.scannedBarcodeList.includes(upc)) {
             this.setState(prevState => {
                 return {
-                    scannedBarcodeList: prevState.scannedBarcodeList.concat(upc)
+                    scannedBarcodeList: prevState.scannedBarcodeList.concat(upcNew)
                 };
             });
         };  
@@ -38,7 +33,7 @@ class ShelfScreen extends React.Component {
             this.newScanCheck();
             return (
                 <DrinkList 
-                    upcScanned={this.scannedBarcodeList}
+                    upc={this.scannedBarcodeList}
                 />
             )
         }
