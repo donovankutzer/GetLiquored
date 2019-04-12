@@ -19,7 +19,6 @@ class BarcodeReaderScreen extends React.Component {
     }
 
     onBarCodeRead = (scan) => {
-        console.log(scan);
         if (scan.data != null) {
             this.props.navigation.navigate('Shelf', { scannedUPC: scan.data });
         }
