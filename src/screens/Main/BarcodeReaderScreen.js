@@ -6,7 +6,7 @@ import { withNavigationFocus } from 'react-navigation';
 class BarcodeReaderScreen extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             camera: {
                 type: RNCamera.Constants.Type.back,
@@ -19,23 +19,18 @@ class BarcodeReaderScreen extends React.Component {
     }
 
     onBarCodeRead = (scan) => {
+        console.log(scan);
         if (scan.data != null) {
-            alert(scan.type);
-            this.setState({
-                barcode: scan.data,
-            }, 
-                function(){ this.props.navigation.navigate('Shelf',{scannedUPC: this.state.barcode}) }
-            );            
+            this.props.navigation.navigate('Shelf', { scannedUPC: scan.data });
         }
-        return;
     }
-    
+
     renderScreen = () => {
         const isFocused = this.props.navigation.isFocused();
 
         if (!isFocused) {
             return null;
-        } else if (isFocused) {
+        } else {
             return (
                 <RNCamera
                     barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
@@ -56,14 +51,14 @@ class BarcodeReaderScreen extends React.Component {
         }
     }
 
-    render () {
-        return(
+    render() {
+        return (
             <View style={styles.container}>
                 {this.renderScreen()}
             </View>
         );
     }
-} 
+}
 
 const styles = StyleSheet.create({
     container: {

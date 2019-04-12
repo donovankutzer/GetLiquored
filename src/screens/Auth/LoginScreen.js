@@ -4,32 +4,32 @@ import { View, TextInput, Button, StyleSheet } from 'react-native';
 
 export default class LoginScreen extends React.Component {
     state = {
-        usernameText: '', 
+        usernameText: '',
         passwordText: '',
     }
 
-    render () {
-        return(
+    render() {
+        return (
             <View style={styles.container}>
                 <View style={styles.inputPosition}>
-                    <TextInput 
+                    <TextInput
                         style={styles.inputField}
-                        onChangeText={(usernameText) => this.setState({usernameText})}
+                        onChangeText={(usernameText) => this.setState({ usernameText })}
                         placeholder="Username"
                         value={this.state.usernameText}
                     />
-                    <TextInput 
+                    <TextInput
                         style={styles.inputField}
-                        onChangeText={(passwordText) => this.setState({passwordText})}
+                        onChangeText={(passwordText) => this.setState({ passwordText })}
                         placeholder="Password"
                         value={this.state.passwordText}
                     />
                 </View>
                 <View style={styles.buttonPosition}>
-                    <Button 
+                    <Button
                         width="150"
                         title="Login"
-                        color="gray" 
+                        color="gray"
                         onPress={() => this.props.navigation.navigate('Main')}
                     />
                 </View>

@@ -1,52 +1,45 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 
 import DrinkList from '../components/DrinkList';
 
-const { navigation } = this.props;
-var upc = '';
-
 class ShelfScreen extends React.Component {
     state = {
-        scannedBarcodeList: [],
+        scannedBarcodeList: []
     };
 
     newScanCheck = () => {
-        upc = navigation.getParam('scannedUPC', '');
+        var upc = this.props.navigation.getParam('scannedUPC', '');
 
-        if (upc !== '' && !this.state.scannedBarcodeList.includes(upc)) {
-            this.setState(prevState => {
-                return {
-                    scannedBarcodeList: prevState.scannedBarcodeList.concat(upcNew)
-                };
-            });
-        };  
+        if (upc && !this.state.scannedBarcodeList.includes(upc)) {
+            this.state.scannedBarcodeList.push(upc);
+        };
     }
 
     renderScreen = () => {
         const isFocused = this.props.navigation.isFocused();
-        
+
         if (!isFocused) {
             return null;
         } else if (isFocused) {
             this.newScanCheck();
             return (
-                <DrinkList 
-                    upc={this.scannedBarcodeList}
+                <DrinkList
+                    upc={this.state.scannedBarcodeList}
                 />
             )
         }
     }
 
-    render () {
-        return(
+    render() {
+        return (
             <View style={styles.container}>
                 {this.renderScreen()}
             </View>
         );
     };
-} 
+}
 
 const styles = StyleSheet.create({
     container: {

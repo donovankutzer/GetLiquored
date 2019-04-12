@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const listItem = (props) => (
-    <View style={styles.listItem}>
-        <Text>{props.upcAdded}</Text>
-    </View>
-);
+const listItem = (props) => {
+    return (
+        <View style={styles.listItem} >
+            <Text>{props.upc}</Text>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     listItem: {
